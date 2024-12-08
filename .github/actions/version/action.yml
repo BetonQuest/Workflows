@@ -41,7 +41,7 @@ runs:
     - uses: BetonQuest/Workflows/.github/actions/version/type@main
       id: version_type
       with:
-        ROOT_REPOSITORY: ${{ inputs.ROOT_REPOSITORY }}Collection of GitHub Action workflows commonly used for BetonQuest and its extensions.
+        ROOT_REPOSITORY: ${{ inputs.ROOT_REPOSITORY }}
     - uses: BetonQuest/Workflows/.github/actions/version/required@main
       id: require_new
       if: "env.VERSION_TYPE == 'development'"
