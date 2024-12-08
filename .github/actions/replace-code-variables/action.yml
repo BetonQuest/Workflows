@@ -1,0 +1,44 @@
+name: Replace all variables in the code
+description: |
+  Replace all variables in the code
+
+inputs:
+  VERSION:
+    description: |
+      The current version
+  VERSION_TYPE:
+    description: |
+      The type of the build.
+    required: true
+  VERSION_NAMESPACE:
+    description: |
+      The namespace for the maven version property (e.g. property `betonquest.version` would have namespace `betonquest`)
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set CHANGELOG.md version
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: |
+        sed -i "s~## \[Unreleased\]~## \[${VERSION}\]~g" ./CHANGELOG.md
+      env:
+        VERSION: ${{ inputs.VERSION }}
+    - name: Set plugin version
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: |
+        sed -i "s~\${${VERSION_NAMESPACE}\.version}~${VERSION}~g" ./src/main/resources/plugin.yml
+      env:
+        VERSION: ${{ inputs.VERSION }}
+    - name: Set pom.xml BetonQuest version
+      if: "env.VERSION_TYPE == 'development'"
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: |
+        ./mvnw versions:set-property -DgenerateBackupPoms=false -Dproperty=${VERSION_NAMESPACE}.version -DnewVersion="$VERSION"
+      env:
+        VERSION: ${{ inputs.VERSION }}
+        VERSION_TYPE: ${{ inputs.VERSION_TYPE }}
+    - name: Activate lf line ending check in editorconfig
+      shell: bash --noprofile --norc -euo pipefail {0}
+      run: |
+        sed -i "s~\[\*\]~[*]\nend_of_line = lf~g" ./.editorconfig
