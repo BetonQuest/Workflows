@@ -30,6 +30,7 @@ runs:
         sed -i "s~\${${VERSION_NAMESPACE}\.version}~${VERSION}~g" ./src/main/resources/plugin.yml
       env:
         VERSION: ${{ inputs.VERSION }}
+        VERSION_NAMESPACE: ${{ inputs.VERSION_NAMESPACE }}
     - name: Set pom.xml BetonQuest version
       if: "env.VERSION_TYPE == 'development'"
       shell: bash --noprofile --norc -euo pipefail {0}
@@ -38,6 +39,7 @@ runs:
       env:
         VERSION: ${{ inputs.VERSION }}
         VERSION_TYPE: ${{ inputs.VERSION_TYPE }}
+        VERSION_NAMESPACE: ${{ inputs.VERSION_NAMESPACE }}
     - name: Activate lf line ending check in editorconfig
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
