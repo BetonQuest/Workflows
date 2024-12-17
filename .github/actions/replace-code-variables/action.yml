@@ -24,15 +24,7 @@ runs:
         sed -i "s~## \[Unreleased\]~## \[${VERSION}\]~g" ./CHANGELOG.md
       env:
         VERSION: ${{ inputs.VERSION }}
-    - name: Set plugin version
-      shell: bash --noprofile --norc -euo pipefail {0}
-      run: |
-        sed -i "s~\${${VERSION_NAMESPACE}\.version}~${VERSION}~g" ./src/main/resources/plugin.yml
-      env:
-        VERSION: ${{ inputs.VERSION }}
-        VERSION_NAMESPACE: ${{ inputs.VERSION_NAMESPACE }}
     - name: Set pom.xml BetonQuest version
-      if: "env.VERSION_TYPE == 'development'"
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
         ./mvnw versions:set-property -DgenerateBackupPoms=false -Dproperty=${VERSION_NAMESPACE}.version -DnewVersion="$VERSION"
