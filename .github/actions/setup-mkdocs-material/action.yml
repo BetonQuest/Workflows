@@ -45,7 +45,7 @@ runs:
         path: ${{ inputs.MKDOCS_SITE_DIR }}/.cache/plugins/optimize
         key: ${{ runner.os }}-hardcoded-media-cache
     - name: Install pngquant, a CI only dependency for mkdocs-material image optimization
-      uses: awalsh128/cache-apt-pkgs-action@v1.2.2
+      uses: awalsh128/cache-apt-pkgs-action@v1.4.3
       with:
         packages: pngquant
     - name: Update python pip
