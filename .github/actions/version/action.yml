@@ -64,7 +64,7 @@ runs:
       with:
         token: ${{ inputs.GITHUB_TOKEN }}
         identifier: ${{ env.REVISION_VERSION }}
-        increment: ${{ env.VERSION_IS_NEW }}
+        increment: ${{ steps.require_new.outputs.NEW_VERSION_REQUIRED }}
     - name: Set version for 'Release Build'
       if: "env.VERSION_TYPE == 'release'"
       shell: bash --noprofile --norc -euo pipefail {0}
