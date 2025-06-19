@@ -16,4 +16,4 @@ runs:
       uses: actions/cache@v4
       with:
         path: ${{ inputs.MAVEN_WRAPPER_DIR }}
-        key: ${{ runner.os }}-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
+        key: ${{ runner.os }}-${{ inputs.MAVEN_WRAPPER_DIR }}-${{ hashFiles('.mvn/wrapper/maven-wrapper.properties') }}
