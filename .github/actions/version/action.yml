@@ -53,7 +53,7 @@ runs:
         TARGET_PATHS: ${{ inputs.EXCLUDE_PATHS }}
     - uses: BetonQuest/Workflows/.github/actions/setup-java-maven/cache-wrapper@main
       with:
-        MAVEN_WRAPPER_DIR: ${{ inputs.MAVEN_TARGET_DIR }}
+        MAVEN_WRAPPER_DIR: ${{ inputs.MAVEN_WRAPPER_DIR }}
     - name: Read revision version from pom.xml
       shell: bash --noprofile --norc -euo pipefail {0}
       run: | 
