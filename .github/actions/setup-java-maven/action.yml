@@ -35,15 +35,23 @@ inputs:
     description: |
       The path to the artifacts target directory for caching.
     required: false
+  MAVEN_WRAPPER_DIR:
+    description: |
+      The path to the Maven wrapper directory for caching.
+    required: false
 
 runs:
   using: composite
   steps:
+    - uses: BetonQuest/Workflows/.github/actions/setup-java-maven/cache-wrapper@main
+      with:
+        MAVEN_WRAPPER_DIR: ${{ inputs.MAVEN_TARGET_DIR }}
     - name: Determine Java version
       uses: BetonQuest/java-version-export-github-action@main
       id: determine-java-version
       with:
         maven-expression: 'java.api.version'
+        maven-command: './mvnw --raw-streams'
     - name: Setup JDK ${{ steps.determine-java-version.outputs.java_major_version }}
       uses: actions/setup-java@v4
       with:
