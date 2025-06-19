@@ -16,6 +16,10 @@ inputs:
     description: |
       Multiline list of paths to exclude from the check.
     required: false
+  MAVEN_WRAPPER_DIR:
+    description: |
+      The path to the Maven wrapper directory for caching.
+    required: false
 
 outputs:
   VERSION:
@@ -34,10 +38,6 @@ outputs:
     description: |
       Whether the changes are only in the docs folder.
     value: ${{ steps.require_new.outputs.NEW_VERSION_REQUIRED || 'true' }}
-  MAVEN_WRAPPER_DIR:
-    description: |
-      The path to the Maven wrapper directory for caching.
-    required: false
 
 runs:
   using: composite
