@@ -20,6 +20,11 @@ inputs:
     description: |
       The path to the Maven wrapper directory for caching.
     required: false
+  SUB_MODULE:
+    default: ''
+    description: |
+      The submodule to execute the maven commands on
+    required: false
 
 outputs:
   VERSION:
@@ -56,13 +61,14 @@ runs:
         MAVEN_WRAPPER_DIR: ${{ inputs.MAVEN_WRAPPER_DIR }}
     - name: Read revision version from pom.xml
       shell: bash --noprofile --norc -euo pipefail {0}
-      run: | 
+      run: |
+        if [ ${{ inputs.SUB_MODULE != '' }} ]; then SUB_MODULE=--projects :${{ inputs.SUB_MODULE }}; else SUB_MODULE=""; fi
         if ./mvnw --version | grep -q 'Apache Maven Daemon'; then
           # Using mvnd – need --raw-streams --non-recursive for proper output, fix for https://github.com/apache/maven-mvnd/issues/1026
-          REVISION_VERSION="$(./mvnw --raw-streams --non-recursive help:evaluate -Dexpression=revision -DforceStdout -q)"
+          REVISION_VERSION="$(./mvnw --raw-streams --non-recursive help:evaluate -Dexpression=revision -DforceStdout -q $SUB_MODULE)"
         else
           # Standard Maven or Maven Wrapper
-          REVISION_VERSION="$(./mvnw help:evaluate -Dexpression=revision -DforceStdout -q)"
+          REVISION_VERSION="$(./mvnw help:evaluate -Dexpression=revision -DforceStdout -q $SUB_MODULE)"
         fi
         echo "REVISION_VERSION=$REVISION_VERSION" >> $GITHUB_ENV
     - name: Generate build number for Development Build
