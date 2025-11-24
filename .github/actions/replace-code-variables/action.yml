@@ -14,6 +14,11 @@ inputs:
     description: |
       The namespace for the maven version property (e.g. property `betonquest.version` would have namespace `betonquest`)
     required: true
+  SUB_MODULE:
+    default: ''
+    description: |
+      The submodule to execute the maven commands on
+    required: false
 
 runs:
   using: composite
@@ -27,7 +32,8 @@ runs:
     - name: Set pom.xml BetonQuest version
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
-        ./mvnw versions:set-property -DgenerateBackupPoms=false -Dproperty=${VERSION_NAMESPACE}.version -DnewVersion="$VERSION"
+        if [ ${{ inputs.SUB_MODULE != '' }} ]; then SUB_MODULE=--projects :${{ inputs.SUB_MODULE }}; else SUB_MODULE=""; fi
+        ./mvnw versions:set-property -DgenerateBackupPoms=false -Dproperty=${VERSION_NAMESPACE}.version -DnewVersion="$VERSION" $SUB_MODULE
       env:
         VERSION: ${{ inputs.VERSION }}
         VERSION_TYPE: ${{ inputs.VERSION_TYPE }}
