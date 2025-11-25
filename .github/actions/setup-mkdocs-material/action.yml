@@ -1,7 +1,7 @@
 name: Setup MkDocs Material
 description: |
   This action sets up a Python environment with the latest version of
-  MkDocs Material and its dependencies and optionally caches the build artifacts.
+  MkDocs Material and its dependencies and optionally caches the build.
 
 inputs:
   MKDOCS_MATERIAL_INSIDERS:
