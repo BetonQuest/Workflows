@@ -1,6 +1,6 @@
 name: Setup Java and Maven
 description: |
-  This action setups Java and Maven and optionally caches the build artifacts.
+  This action setups Java and Maven and optionally caches the build directory.
 
 inputs:
   JAVA_DISTRIBUTION:
@@ -31,9 +31,9 @@ inputs:
       The variable name for the password to use for the repository.
     required: false
     default: 'GITHUB_TOKEN'
-  MAVEN_TARGET_DIR:
+  MAVEN_BUILD_DIR:
     description: |
-      The path to the artifacts target directory for caching.
+      The path to the Maven build directory for caching.
     required: false
   MAVEN_WRAPPER_DIR:
     description: |
@@ -63,4 +63,4 @@ runs:
         server-password: ${{ inputs.JAVA_REPOSITORY_PASS }}
     - uses: BetonQuest/Workflows/.github/actions/setup-java-maven/cache@main
       with:
-        MAVEN_TARGET_DIR: ${{ inputs.MAVEN_TARGET_DIR }}
+        MAVEN_BUILD_DIR: ${{ inputs.MAVEN_BUILD_DIR }}
