@@ -8,7 +8,7 @@ inputs:
       The distribution of the JDK to use.
     required: false
     default: 'zulu'
-  JAVA_OVERIDE:
+  JAVA_OVERRIDE:
     description: |
       The version of the JDK to use.
     required: false
@@ -56,7 +56,7 @@ runs:
       uses: actions/setup-java@v4
       with:
         distribution: ${{ inputs.JAVA_DISTRIBUTION }}
-        java-version: ${{ inputs.JAVA_OVERIDE || steps.determine-java-version.outputs.java_major_version }}
+        java-version: ${{ inputs.JAVA_OVERRIDE || steps.determine-java-version.outputs.java_major_version }}
         cache: ${{ inputs.JAVA_CACHE }}
         server-id: ${{ inputs.JAVA_REPOSITORY_ID }}
         server-username: ${{ inputs.JAVA_REPOSITORY_USER }}
