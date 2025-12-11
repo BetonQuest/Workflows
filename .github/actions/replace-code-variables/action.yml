@@ -32,7 +32,7 @@ runs:
     - name: Set pom.xml BetonQuest version
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
-        if [ ${{ inputs.SUB_MODULE != '' }} ]; then SUB_MODULE="--projects :${{ inputs.SUB_MODULE }}"; else SUB_MODULE=""; fi
+        if [ ${{ inputs.SUB_MODULE == '' }} ]; then SUB_MODULE=""; else SUB_MODULE="--projects :${{ inputs.SUB_MODULE }}"; fi
         ./mvnw versions:set-property -DgenerateBackupPoms=false -Dproperty=${VERSION_NAMESPACE}.version -DnewVersion="$VERSION" $SUB_MODULE
       env:
         VERSION: ${{ inputs.VERSION }}
