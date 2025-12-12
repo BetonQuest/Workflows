@@ -62,7 +62,7 @@ runs:
     - name: Read revision version from pom.xml
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
-        if [ ${{ inputs.SUB_MODULE == '' }} ]; then SUB_MODULE=""; else SUB_MODULE="--projects :${{ inputs.SUB_MODULE }}"; fi
+        if [ -z "${{ inputs.SUB_MODULE }}" ]; then SUB_MODULE=""; else SUB_MODULE="--projects :${{ inputs.SUB_MODULE }}"; fi
         if ./mvnw --version | grep -q 'Apache Maven Daemon'; then
           # Using mvnd – need --raw-streams for proper output, fix for https://github.com/apache/maven-mvnd/issues/1026
           REVISION_VERSION="$(./mvnw --raw-streams help:evaluate -Dexpression=revision -DforceStdout -q $SUB_MODULE)"
