@@ -4,10 +4,6 @@ description: |
   MkDocs Material and its dependencies and optionally caches the build.
 
 inputs:
-  MKDOCS_MATERIAL_INSIDERS:
-    description: |
-      The GitHub token to use for installing the MkDocs Material Insiders.
-    required: true
   MKDOCS_SITE_DIR:
     description: |
       The path to the MkDocs site directory for caching.
@@ -56,6 +52,3 @@ runs:
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
         python docs/setup-docs-dependencies.py
-      env:
-        MKDOCS_MATERIAL_INSIDERS: ${{ inputs.MKDOCS_MATERIAL_INSIDERS }}
-        MKDOCS_MATERIAL_INSIDERS_ENABLED: ${{ inputs.MKDOCS_MATERIAL_INSIDERS != '' }}
