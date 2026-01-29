@@ -48,7 +48,7 @@ runs:
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
         python3 -m pip install --upgrade pip
-    - name: Install dependencies with docs/setup-docs-dependencies.py
+    - name: Install dependencies with pip install
       shell: bash --noprofile --norc -euo pipefail {0}
       run: |
-        python docs/setup-docs-dependencies.py
+        pip install ./docs[imaging]
